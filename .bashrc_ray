@@ -1,0 +1,197 @@
+# .bashrc
+# Source global definitions
+# if [ -f /etc/bashrc ]; then
+# 	. /etc/bashrc
+# fi
+
+ulimit -c unlimited
+export LANG=en_US.UTF-8
+export PS1="\n[\u@ :\w]\$ "
+alias ls="ls --color=tty"
+alias ll="ls -l"
+
+date2sec()
+{
+	if [ $# -eq 0 ]; then
+		date +%s
+	else
+		date +%s -d "$1"
+	fi
+
+	return 0
+}
+
+
+sec2date()
+{
+	if [ $# -eq 0 ]; then
+		date -d "1970-01-01 UTC 0 seconds" +"%Y-%m-%d %T %z"
+	else
+		date -d "1970-01-01 UTC ${1} seconds" +"%Y-%m-%d %T %z"
+	fi
+
+	return 0
+}
+
+
+
+# pkill pgrep killall
+
+
+function grep_cpp()
+{
+	if [ $# -lt 2 ];then
+	
+		echo "[error] commond format: cmd path pattern"
+	
+	else
+		clear
+		echo "## *.h *.cpp *.inl *.c *.hpp ##"
+		grep -nr "$1" --include="*.h" --include="*.cpp" --include="*.inl" --include="*.c" --include="*.hpp" $2
+	fi
+}
+
+
+function grep_lua()
+{
+	if [ $# -lt 2 ];then
+	
+		echo "[error] commond format: cmd path pattern"
+	
+	else
+		clear
+		echo "## *.lua ##"
+		grep -nr "$1" --include="*.lua"  $2
+	fi
+}
+
+
+function grep_sh()
+{
+	if [ $# -lt 2 ];then
+	
+		echo "[error] commond format: cmd path pattern"
+	
+	else
+		clear
+		echo "## *.sh *.inc ##"
+		grep -nr "$1" --include="*.sh" --include="*.inc"  $2
+	fi
+}
+
+function touch_cpp
+{
+	if [ $# -lt 1 ]
+	then
+		echo "[error] commond format: cmd name ..."
+	else
+		for class in "$@"
+		do
+			CLASS="`tr \"[a-z]\" \"[A-Z]\" <<< \"${class}\"`"
+			fh=${class}".h"
+			fcpp=${class}".cpp"
+			if [  -f ${fh} ] || [ -f ${fcpp} ]
+			then
+				echo "[error] touch ${class} failed: file exist"
+			else
+				# .h
+				echo "#ifndef _"${CLASS}"_H_" >> ${fh}
+				echo "#define _"${CLASS}"_H_" >> ${fh}
+				echo "" >> ${fh}
+				echo "class C"${class} >> ${fh}
+				echo "{" >> ${fh}
+				echo "	public:" >> ${fh}
+				echo "		C"${class}"();" >> ${fh}
+				echo "		~C"${class}"();" >> ${fh}
+				echo "};" >> ${fh}
+				echo "" >> ${fh}
+				echo "#endif // _"${CLASS}"_H_" >> ${fh}
+				echo "" >> ${fh}
+
+				# .cpp
+				echo "#include \"${fh}\"" >> ${fcpp}
+				echo "" >> ${fcpp}
+				echo "C"${class}"::C"${class}"()" >> ${fcpp}
+				echo "{" >> ${fcpp}
+				echo "}" >> ${fcpp}
+				echo "" >> ${fcpp}
+				echo "C"${class}"::~C"${class}"()" >> ${fcpp}
+				echo "{" >> ${fcpp}
+				echo "}" >> ${fcpp}
+				echo "" >> ${fcpp}
+				echo "" >> ${fcpp}
+
+			fi
+		done
+	fi
+}
+
+function vim_make()
+{
+
+	###############################################
+	# clean
+	if [ "$1" == "clean" ]; then
+		rm ./cscope.files  ./cscope.in.out  ./cscope.out  ./cscope.po.out ./filenametags ./tags ./vim ./vim_log
+		return
+	fi
+
+
+	################################################
+	if [ ! -f "./vim_log" ]; then
+		touch ./vim_log
+	fi
+
+	echo -n "$(date +"%Y-%m-%d  %T  ")" >> ./vim_log
+	echo "#: vim_make  --- by ${USER}" >> ./vim_log
+
+
+	###################################################
+	echo "ctags: tags"
+	if [ -f "./tags" ]; then
+		rm ./tags
+	fi
+
+	ctags -R --languages=c++ --langmap=c++:+.inl+.c -h +.inl --c++-kinds=+px --fields=+aiKSz --extra=+q .
+
+	#####################################################
+	echo "cscope: cscope.out"
+	if [ -f "./cscope.out" ]; then
+		rm ./cscope.out
+	fi
+
+	find ./ -name "*.h" -o -name "*.cpp" -o -name "*.c" -o -name "*.inl" > cscope.files
+	cscope -bkq -i cscope.files
+
+	####################################################
+	# echo "lookupfile: filenametags"
+	# if [ -f "./filenametags" ]; then
+	# 	rm ./filenametags
+	# fi
+
+	# echo -e "!_TAG_FILE_SORTED\t2\t/2=foldcase/" > filenametags
+	# find . -not -regex '.*\.\(png\|gif\)' ! -path "*svn*" -type f -printf "%f\t%p\t1\n" | sort -f >> filenametags
+
+
+
+	#####################################################
+	if [ ! -x "./vim" ]; then
+		echo -e "echo -n \"\$(date +\"%Y-%m-%d  %T  \")\" >> ./vim_log\n echo \"\#: vim  --- by \${USER}\" >> ./vim_log\nvim ./vim_log" > ./vim
+		sudo chmod a+x ./vim
+	fi
+
+
+}
+
+
+#################################################################################
+# loa
+
+# if [ -f ~/.bashrc_loa ]; then
+# 	. ~/.bashrc_loa 
+# fi
+
+
+
+# User specific aliases and functions 
+
