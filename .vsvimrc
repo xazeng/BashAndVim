@@ -1,0 +1,67 @@
+set scrolloff=5
+let mapleader="f"
+let g:mapleader="f"
+
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
+set nowrapscan
+set magic
+
+nnoremap <Leader>d :vsc Edit.GoToFile<CR>
+nnoremap <Leader>m :vsc Edit.GoToMember<CR>
+nnoremap <Leader>s :vsc Edit.FindinFiles<CR>
+nnoremap <Leader>o :vsc EditorContextMenus.CodeWindow.ToggleHeaderCodeFile<CR>
+nnoremap <Leader>e :vsc SolutionExplorer.SyncWithActiveDocument<CR>
+" nnoremap <Leader>r :vsc Edit.GoToRecentFile<CR>
+" vnoremap <F1>:vsc Help.F1Help<CR>
+
+" nnoremap <Leader>o :vsc VAssistX.OpenCorrespondingFile<CR>
+" nnoremap <Leader>d :vsc VAssistX.OpenFileInSolutionDialog<CR>
+" nnoremap <Leader>m :vsc VAssistX.ListMethodsInCurrentFile<CR>
+" " nnoremap <Leader>g :vsc VAssistX.RefactorContextMenu<CR>
+" nnoremap <Leader>g :vsc VAssistX.GotoImplementation<CR>
+" nnoremap <Leader>c :vsc VAssistX.SelectionToggleLineComment<CR>
+" vnoremap <Leader>c :vsc VAssistX.SelectionToggleLineComment<CR>
+
+" View.SolutionExplorer
+" View.NavigateBackward
+" View.NavigateForward
+" Window.NextDocumentWindowNav
+" Window.PreviousDocumentWindowNav
+" Edit.Find
+" Edit.Paste  Shift+Ins
+" Edit.Copy  Ctrl+Ins
+" Edit.QuickFindSymbol
+
+" nnoremap <Leader>o :vsc ReSharper.ReSharper_SwitchHeaderSource<CR>
+" nnoremap <Leader>f :vsc ReSharper.ReSharper_GotoRecentFiles<CR>
+" nnoremap <Leader>m :vsc ReSharper.ReSharper_GotoFileMember<CR>
+" nnoremap <Leader>g :vsc ReSharper.ReSharper_Generate<CR>
+" nnoremap <Leader>r :vsc ReSharper.ReSharper_Rename<CR>
+" nnoremap <Leader>c :vsc ReSharper.ReSharper_LineComment<CR>
+" vnoremap <Leader>c :vsc ReSharper.ReSharper_LineComment<CR>
+
+" ReSharper.ReSharper_GotoDeclaration  
+" ReSharper.ReSharper_GotoSymbol
+" ReSharper.ReSharper_GotoFileMember
+" ReSharper.ReSharper_GotoFile
+" ReSharper.ReSharper_GotoSymbol
+" ReSharper.ReSharper_GotoFileMember
+" ReSharper.ReSharper_NavigateBackward
+" ReSharper.ReSharper_NavigateForward
+" ReSharper.ReSharper_GotoRecentFiles
+" ReSharper.ReSharper_SwitchHeaderSource
+" ReSharper.ReSharper_Generate
+" ReSharper.ReSharper_Rename
+" ReSharper.ReSharper_LineComment
+
+
+
+
+
+
+
+
+
